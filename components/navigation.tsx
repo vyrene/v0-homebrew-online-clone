@@ -1,16 +1,17 @@
 "use client"
 
 import { motion } from "framer-motion"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { ThemeToggle } from "./theme-toggle"
 
 export function Navigation() {
-  const pathname = usePathname()
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId)
+    element?.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
 
   return (
     <motion.nav
-      className="fixed top-0 left-0 right-0 z-50 px-6 py-6"
+      className="fixed top-0 left-0 right-0 z-50 px-6 py-6 bg-background/80 backdrop-blur-sm"
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{
@@ -21,40 +22,36 @@ export function Navigation() {
       }}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <Link href="/">
+        <button onClick={() => scrollToSection("hero")}>
           <motion.span
-            className="text-xl font-bold tracking-tight"
+            className="text-xl font-bold tracking-tight cursor-pointer"
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
             HOMEBREW ONLINE
           </motion.span>
-        </Link>
+        </button>
 
         <div className="flex items-center gap-8">
-          <Link href="/artists">
+          <button onClick={() => scrollToSection("artists")}>
             <motion.span
-              className={`text-lg font-medium transition-colors ${
-                pathname === "/artists" ? "text-foreground" : "text-muted-foreground hover:text-foreground"
-              }`}
+              className="text-lg font-medium text-muted-foreground hover:text-foreground transition-colors duration-300 cursor-pointer"
               whileHover={{ y: -2 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
               ARTISTS
             </motion.span>
-          </Link>
+          </button>
 
-          <Link href="/contact">
+          <button onClick={() => scrollToSection("contact")}>
             <motion.span
-              className={`text-lg font-medium transition-colors ${
-                pathname === "/contact" ? "text-foreground" : "text-muted-foreground hover:text-foreground"
-              }`}
+              className="text-lg font-medium text-muted-foreground hover:text-foreground transition-colors duration-300 cursor-pointer"
               whileHover={{ y: -2 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
               CONTACT
             </motion.span>
-          </Link>
+          </button>
 
           <ThemeToggle />
         </div>
